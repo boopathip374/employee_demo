@@ -14,14 +14,14 @@ pipeline {
         stage("Clone code from GitHub") {
             steps {
                 script {
-                    git branch: 'main', credentialsId: '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', url: 'https://github.com/boopathip374/employee_demo.git';
+                    git branch: 'main', credentialsId: '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', url: 'https://github.com/boopathip374/employee_demo/employee';
                 }
             }
         }
         stage('Maven Build') {
             steps {
                  script {
-                    sh "mvn package -DskipTests=true"
+                    sh 'mvn -B -DskipTests clean package'
                 }
             }
         }
