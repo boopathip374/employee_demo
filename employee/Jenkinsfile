@@ -11,20 +11,19 @@ pipeline {
         NEXUS_CREDENTIAL_ID = "NEXUS_CRED"
     }
     stages {
-        stage("Clone code from GitHub") {
+        stage('Build') {
             steps {
-                script {
-                    git branch: 'main', credentialsId: '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', url: 'https://github.com/boopathip374/employee_demo';
-                }
+                git branch: 'main'
+                
+                // Get some code from a GitHub repository
+                git 'https://github.com/boopathip374/employee_demo.git'
+
+                // Run Maven on a Unix agent.
+                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+
+                // To run Maven on a Windows agent, use
+                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
-        }
-        stage('Maven Build') {
-            steps {
-                 script {
-                    sh 'mvn -B -DskipTests clean package'
-                }
-            }
-        }
         stage("Publish to Nexus Repository Manager") {
             steps {
                 script {
