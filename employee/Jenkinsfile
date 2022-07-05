@@ -20,9 +20,9 @@ pipeline {
         }
         stage('Maven Build') {
             steps {
-                withMaven(maven: 'mvn') {
-            sh "mvn clean package"
-               }
+                 script {
+                    sh "mvn package -DskipTests=true"
+                }
             }
         }
         stage("Publish to Nexus Repository Manager") {
